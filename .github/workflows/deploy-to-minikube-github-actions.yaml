@@ -9,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Start minikube
-      uses: 01c0ce65fff70ab1f019aa14679c46b23331bd108ae899438e589673efaa9c00/setup-minikube@master
+      uses: medyag/setup-minikube@master
     - name: Try the cluster !
       run: kubectl get pods -A
     - name: Build image
