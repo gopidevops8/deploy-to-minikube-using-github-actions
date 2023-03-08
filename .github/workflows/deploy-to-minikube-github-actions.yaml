@@ -5,24 +5,22 @@ on: [push]
 jobs:
   job1:
     runs-on: ubuntu-latest
-    name: build Node.js Docker Image and deploy to minikube
+    name: build Node.js Docker Image
     steps:
     - uses: actions/checkout@v2
-    - name: Start minikube
-      uses: medyagh/setup-minikube@master
-    - name: Try the cluster !
-      run: kubectl get pods -A
-    - name: Build image
-      run: |
-          export SHELL=/bin/bash
-          eval $(minikube -p minikube docker-env)
-          docker build -f ./Dockerfile -t devopshint/node-app:latest .
-          echo -n "verifying images:"
-          docker images         
-    - name: Deploy to minikube
-      run:
-        kubectl apply -f k8s-node-app.yaml
-    - name: Test service URLs
-      run: |
-          minikube service list
-          minikube service nodejs-app --url
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with: 
+       node-Version: 16.X
+       cache: "npm"
+    - run: npm install
+    - name: Login tp Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: "gopi123321"
+        password: "Lanka@143"
+    - name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: gopi123321/app
