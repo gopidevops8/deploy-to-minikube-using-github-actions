@@ -11,7 +11,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v2
       with: 
-       node-Version: 16.X
+       node-Version: 14.X
        cache: "npm"
     - run: npm install
     - name: Login tp Docker Hub
